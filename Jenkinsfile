@@ -1,12 +1,10 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Rollback') {
+        stage('Input') {
             steps {
                 script {
-                    def releaseNames = ['ssd-api', 'ssd-lops-api', 'ssd-lops-ui', 'ssd-push', 'ssd-special-ops']
-                    
+                    def releaseNames = ['ssd-api', 'ssd-lops-api']
                     def releaseName = input(
                         id: 'ReleaseName',
                         message: 'Select release name',
@@ -14,17 +12,10 @@ pipeline {
                             choice(name: 'ReleaseName', choices: releaseNames, description: 'Choose the name')
                         ]
                     )
-                    
                     echo "Selected release name: $releaseName"
-                    
-                    // Here, you can write logic to fetch the last version number based on the selected releaseName.
-                    // For example:
-                    // def lastVersion = getLastVersion(releaseName)
-                    // sh "your-command $lastVersion"
                 }
             }
         }
-        
         stage('Your Custom Stage 1') {
             steps {
                 script {
